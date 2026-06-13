@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.ui.AetherAppContent
-import com.example.ui.AetherViewModel
+import com.example.ui.KimiAppContent
+import com.example.ui.KimiViewModel
 import com.example.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,9 +15,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                // Initialize the central Aether MVVM structure
-                val viewModel: AetherViewModel = viewModel()
-                AetherAppContent(viewModel = viewModel)
+                // Initialize the central Kimi MVVM structure
+                val viewModel: KimiViewModel = viewModel()
+                KimiAppContent(viewModel = viewModel)
             }
         }
     }

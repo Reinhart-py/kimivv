@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AetherRepository(private val context: Context) {
+class KimiRepository(private val context: Context) {
 
     val database: AppDatabase by lazy {
         Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "aether_call_db"
+            "kimi_call_db"
         )
         .fallbackToDestructiveMigration()
         .build()
@@ -44,32 +44,32 @@ class AetherRepository(private val context: Context) {
     }
 
     private suspend fun preseedDatabase() = withContext(Dispatchers.IO) {
-        // 1. Initial High-Performance AI Calling Agents
+        // 1. Initial High-Performance Calling Agents
         val agents = listOf(
             AIAgent(
-                name = "Aether Prime (Enterprise)",
-                voiceType = "Aether Male (Pro)",
+                name = "Kimi Pro (Enterprise)",
+                voiceType = "Kimi Male (Natural)",
                 pitch = 1.05f,
                 speed = 0.98f,
-                systemPrompt = "You are Aether Prime, an elite luxury brand representative. Speak with absolute composure, rich vocabulary, and warm reassurance. Guide high-intent buyers through qualified product onboarding.",
+                systemPrompt = "You are Kimi Pro, an executive call assistant. Speak with composure, clarity, and warm reassurance. Guide clients through onboarding.",
                 temperature = 0.65f,
                 language = "English (US)"
             ),
             AIAgent(
-                name = "Lyra Satin (Inbound Care)",
-                voiceType = "Nova Female (Satin)",
+                name = "Kimi Care (Warm)",
+                voiceType = "Kimi Female (Warm)",
                 pitch = 1.15f,
                 speed = 1.05f,
-                systemPrompt = "You are Lyra, an empathetic concierge executive. Provide pristine, white-glove booking experience and address concerns with extreme helpfulness.",
+                systemPrompt = "You are Kimi Care, a warm client relations representative. Provide a helpful booking experience and answer queries with extreme helpfulness.",
                 temperature = 0.70f,
                 language = "English (US)"
             ),
             AIAgent(
-                name = "Echo Warm (Lead Outbound)",
-                voiceType = "Echo Warm (Natural)",
+                name = "Kimi Lead (Standard)",
+                voiceType = "Kimi Outbound (Standard)",
                 pitch = 0.90f,
                 speed = 1.00f,
-                systemPrompt = "You are Echo - a high-energy outbound conversion strategist. Focus on deep qualification, responsive pacing, and natural interaction structure.",
+                systemPrompt = "You are Kimi Lead, an outbound communication assistant. Focus on client questions, schedule planning, and natural responses.",
                 temperature = 0.75f,
                 language = "English (UK)"
             )
@@ -94,7 +94,7 @@ class AetherRepository(private val context: Context) {
         )
         campaignsList.forEach { campaignDao.insertCampaign(it) }
 
-        // 4. Premium Historical Calls with rich transcripts
+        // 4. Historical Calls with clean transcripts
         val calls = listOf(
             CallHistory(
                 contactName = "Marcus Aurelius",
@@ -102,7 +102,7 @@ class AetherRepository(private val context: Context) {
                 direction = "Outbound",
                 durationSeconds = 142,
                 status = "Completed",
-                transcript = "Agent: Good afternoon Marcus. I hope your day is going exceptionally well. I am calling from Aether Premium systems.\nMarcus: Hello. Yes, I was actually looking at your intelligence engine. It looks impressive.\nAgent: Thank you. Our technology is designed to orchestrate seamless executive communications. I can book an onboarding slot for you tomorrow at 3 PM.\nMarcus: Great, that works perfectly. Please send the luxury invitation pack.\nAgent: Configured. The invitation has been securely dispatched to your terminal.",
+                transcript = "Agent: Good afternoon Marcus. I hope your day is going exceptionally well. I am calling from Kimi Calling Systems.\nMarcus: Hello. Yes, I was actually looking at your client dashboard. It looks clean.\nAgent: Thank you. Our technology is designed to orchestrate seamless customer communications. I can book an onboarding slot for you tomorrow at 3 PM.\nMarcus: Great, that works perfectly. Please send the confirmation details.\nAgent: Configured. The details have been sent to your device.",
                 sentiment = "Positive",
                 timestamp = System.currentTimeMillis() - 600000
             ),
@@ -112,7 +112,7 @@ class AetherRepository(private val context: Context) {
                 direction = "Inbound",
                 durationSeconds = 210,
                 status = "Completed",
-                transcript = "Amara: Hi! I noticed Aether Call handled my client's query instantly. I'd love to set up this automated answering system for my consultancy.\nAgent: Welcome, Ms. Amara. I would be delighted to orchestrate this for you. Your consultancy qualifies for our Sapphire integration tear. May I confirm your primary business hours?\nAmara: Yes, 24/7 global coverage is preferred.\nAgent: Excellent. It is now commissioned. We are initiating the pilot program.",
+                transcript = "Amara: Hi! I noticed Kimi Call handled my client's query instantly. I'd love to set up this automated answering system for my consultancy.\nAgent: Welcome, Ms. Amara. I would be delighted to set this up for you. May I confirm your primary business hours?\nAmara: Yes, 24/7 global coverage is preferred.\nAgent: Excellent. It is now active. We are initiating the pilot program.",
                 sentiment = "Positive",
                 timestamp = System.currentTimeMillis() - 3600000
             ),
@@ -122,7 +122,7 @@ class AetherRepository(private val context: Context) {
                 direction = "Outbound",
                 durationSeconds = 0,
                 status = "No Answer",
-                transcript = "[Call placed - Ringing... No reply received. Custom voicemail dropped securely.]",
+                transcript = "[Call placed - Ringing... No reply received. Custom voicemail dropped.]",
                 sentiment = "Neutral",
                 timestamp = System.currentTimeMillis() - 7200000
             )
@@ -131,10 +131,10 @@ class AetherRepository(private val context: Context) {
 
         // 5. Automation Rules
         val rules = listOf(
-            AutomationRule(triggerEvent = "On High-Intent Lead Qualified", actionToTake = "Trigger real-time booking sequence via Aether Prime"),
+            AutomationRule(triggerEvent = "On High-Intent Lead Qualified", actionToTake = "Trigger real-time booking sequence via Kimi Pro"),
             AutomationRule(triggerEvent = "On Call Unanswered", actionToTake = "Drop 'Concierge Soft' voice note after 24 hours"),
-            AutomationRule(triggerEvent = "On Inbound Call Busy Hour", actionToTake = "Route overflow traffic to Secondary Lyra Backup Agent"),
-            AutomationRule(triggerEvent = "On Appointment Completed", actionToTake = "Syndicate metadata contact record to HubSpot & Salesforce")
+            AutomationRule(triggerEvent = "On Inbound Call Busy Hour", actionToTake = "Route overflow traffic to Secondary Kimi Care"),
+            AutomationRule(triggerEvent = "On Appointment Completed", actionToTake = "Syndicate contact record to CRM integrations")
         )
         rules.forEach { automationRuleDao.insertRule(it) }
     }

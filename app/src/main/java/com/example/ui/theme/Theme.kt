@@ -2,34 +2,33 @@ package com.example.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LuxuryColorScheme = darkColorScheme(
-    primary = ElectricSapphire,
+private val KimiColorScheme = lightColorScheme(
+    primary = KimiBurgundy,
     onPrimary = Color.White,
-    secondary = MutedBlueGlow,
-    onSecondary = MidnightBlue,
-    tertiary = SapphireGlow,
-    background = MidnightBlue,
-    onBackground = SoftIceWhite,
-    surface = RichNavy,
-    onSurface = SoftIceWhite,
-    surfaceVariant = DarkGreyNavy,
-    onSurfaceVariant = SilverFrost,
-    outline = MutedBlueGlow
+    secondary = KimiPeach,
+    onSecondary = KimiBurgundy,
+    tertiary = KimiDarkPeach,
+    background = KimiCream,
+    onBackground = KimiCharcoal,
+    surface = KimiWhite,
+    onSurface = KimiCharcoal,
+    surfaceVariant = KimiLightRose,
+    onSurfaceVariant = KimiWarmGray,
+    outline = KimiDarkPeach
 )
 
 @Composable
 fun MyApplicationTheme(
-    darkTheme: Boolean = true, // Force dark theme for luxury look
+    darkTheme: Boolean = false,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    // We ignore dynamicColor and darkTheme to enforce the premium "Aether Call" midnight brand identity
     MaterialTheme(
-        colorScheme = LuxuryColorScheme,
+        colorScheme = KimiColorScheme,
         typography = Typography,
         content = content
     )

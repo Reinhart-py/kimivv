@@ -1,6 +1,6 @@
 {
-  "name": "Aether Call",
-  "description": "Enterprise-grade luxury AI calling agent and campaign automation platform.",
+  "name": "Kimi",
+  "description": "Client communication dialer and campaign automation platform.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

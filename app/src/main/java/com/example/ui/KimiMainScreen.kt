@@ -36,23 +36,23 @@ import com.example.data.AIAgent
 import com.example.data.AutomationRule
 import com.example.data.CallHistory
 import com.example.data.Contact
-import com.example.ui.theme.MidnightBlue
-import com.example.ui.theme.RichNavy
-import com.example.ui.theme.ElectricSapphire
-import com.example.ui.theme.SoftIceWhite
-import com.example.ui.theme.SilverFrost
-import com.example.ui.theme.MutedBlueGlow
-import com.example.ui.theme.DarkGreyNavy
-import com.example.ui.theme.SapphireGlow
+import com.example.ui.theme.KimiCream
+import com.example.ui.theme.KimiBurgundy
+import com.example.ui.theme.KimiPeach
+import com.example.ui.theme.KimiDarkPeach
+import com.example.ui.theme.KimiWhite
+import com.example.ui.theme.KimiCharcoal
+import com.example.ui.theme.KimiWarmGray
+import com.example.ui.theme.KimiLightRose
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AetherAppContent(viewModel: AetherViewModel = viewModel()) {
+fun KimiAppContent(viewModel: KimiViewModel = viewModel()) {
     val navState by viewModel.navigationState.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MidnightBlue
+        color = KimiCream
     ) {
         AnimatedContent(
             targetState = navState,
@@ -64,10 +64,10 @@ fun AetherAppContent(viewModel: AetherViewModel = viewModel()) {
             label = "ScreenTransition"
         ) { state ->
             when (state) {
-                AppNavigationState.SPLASH -> SplashScreen(viewModel)
-                AppNavigationState.ONBOARDING -> OnboardingScreen(viewModel)
-                AppNavigationState.LOGIN -> LoginScreen(viewModel)
-                AppNavigationState.MAIN -> MainDashboardContainer(viewModel)
+                AppNavigationState.SPLASH -> KimiSplashScreen(viewModel)
+                AppNavigationState.ONBOARDING -> KimiOnboardingScreen(viewModel)
+                AppNavigationState.LOGIN -> KimiLoginScreen(viewModel)
+                AppNavigationState.MAIN -> KimiMainDashboardContainer(viewModel)
             }
         }
     }
@@ -75,13 +75,13 @@ fun AetherAppContent(viewModel: AetherViewModel = viewModel()) {
 
 // ---------------- SPLASH SCREEN ----------------
 @Composable
-fun SplashScreen(viewModel: AetherViewModel) {
+fun KimiSplashScreen(viewModel: KimiViewModel) {
     val infiniteTransition = rememberInfiniteTransition(label = "pulse")
     val alphaScale by infiniteTransition.animateFloat(
-        initialValue = 0.4f,
+        initialValue = 0.5f,
         targetValue = 1.0f,
         animationSpec = infiniteRepeatable(
-            animation = tween(2000, easing = LinearEasing),
+            animation = tween(1800, easing = EaseInOutQuad),
             repeatMode = RepeatMode.Reverse
         ),
         label = "alpha"
@@ -90,12 +90,18 @@ fun SplashScreen(viewModel: AetherViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(KimiCream)
             .drawBehind {
-                // Background ambient soft radials
+                // Background warm ambient soft radials
                 drawCircle(
-                    color = ElectricSapphire.copy(alpha = 0.15f),
-                    radius = 400.dp.toPx(),
-                    center = Offset(size.width / 2, size.height / 3)
+                    color = KimiPeach.copy(alpha = 0.4f),
+                    radius = 350.dp.toPx(),
+                    center = Offset(size.width * 0.2f, size.height * 0.2f)
+                )
+                drawCircle(
+                    color = KimiPeach.copy(alpha = 0.5f),
+                    radius = 450.dp.toPx(),
+                    center = Offset(size.width * 0.8f, size.height * 0.8f)
                 )
             },
         contentAlignment = Alignment.Center
@@ -107,78 +113,86 @@ fun SplashScreen(viewModel: AetherViewModel) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(110.dp)
                     .drawBehind {
                         drawCircle(
-                            color = ElectricSapphire.copy(alpha = alphaScale * 0.3f),
-                            radius = (45f + (alphaScale * 15f)).dp.toPx(),
-                            style = Stroke(width = 2.dp.toPx())
+                            color = KimiBurgundy.copy(alpha = alphaScale * 0.15f),
+                            radius = (50f + (alphaScale * 12f)).dp.toPx()
                         )
-                    },
+                    }
+                    .background(KimiWhite, CircleShape)
+                    .border(1.5.dp, KimiDarkPeach, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Rounded.RecordVoiceOver,
-                    contentDescription = "Aether Voice Logo",
-                    tint = ElectricSapphire,
-                    modifier = Modifier.size(48.dp)
+                    contentDescription = "Kimi Voice Logo",
+                    tint = KimiBurgundy,
+                    modifier = Modifier.size(54.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "ÆTHER CALL",
-                style = MaterialTheme.typography.displayMedium.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    letterSpacing = 6.sp,
-                    color = SoftIceWhite
+                text = "KIMI",
+                style = MaterialTheme.typography.displayLarge.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 4.sp,
+                    color = KimiBurgundy
                 )
             )
 
             Text(
-                text = "Luxury Intelligence Operator Engine",
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    color = SilverFrost.copy(alpha = 0.8f),
-                    letterSpacing = 1.5.sp
+                text = "Client Communication Dialer",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = KimiWarmGray,
+                    letterSpacing = 1.sp
                 ),
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 6.dp)
             )
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(54.dp))
 
             Button(
                 onClick = { viewModel.setNavigationState(AppNavigationState.ONBOARDING) },
-                colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                shape = RoundedCornerShape(28.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = KimiBurgundy,
+                    contentColor = KimiPeach
+                ),
+                shape = RoundedCornerShape(32.dp),
                 modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .height(54.dp)
+                    .fillMaxWidth(0.65f)
+                    .height(56.dp)
                     .testTag("enter_button"),
-                elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "COMMISSION SUITE",
-                        style = MaterialTheme.typography.labelLarge.copy(color = Color.White)
+                        text = "GET STARTED",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            color = KimiPeach,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp
+                        )
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = "Proceed",
-                        tint = Color.White
+                        tint = KimiPeach
                     )
                 }
             }
         }
 
         Text(
-            text = "VERSION 4.2.1 // ENCRYPTED TRUNK LINK",
+            text = "KIMI DISPATCH SYSTEM",
             style = MaterialTheme.typography.labelSmall.copy(
-                color = SilverFrost.copy(alpha = 0.4f),
+                color = KimiWarmGray.copy(alpha = 0.6f),
                 letterSpacing = 1.sp
             ),
             modifier = Modifier
@@ -191,34 +205,28 @@ fun SplashScreen(viewModel: AetherViewModel) {
 
 // ---------------- ONBOARDING SCREEN ----------------
 @Composable
-fun OnboardingScreen(viewModel: AetherViewModel) {
+fun KimiOnboardingScreen(viewModel: KimiViewModel) {
     var currentPage by remember { mutableStateOf(0) }
     val headers = listOf(
-        "Autonomous Dialing Node",
-        "Conconcierge Intelligence",
-        "Root Trunk Encryption"
+        "Kimi Call Assistant",
+        "Client Response Manager",
+        "Direct Call Settings"
     )
     val descriptions = listOf(
-        "Empower your workspace with voice-cloned sovereign AI entities operating with zero manual intervention.",
-        "On-device neural parameters score and qualify high-intent pipelines instantly.",
-        "Leverage low-level SIP integrations and rooted kernel parameters to pipe call channels securely."
+        "Deploy warm, helpful caller profiles to manage client followups and onboarding calls smoothly.",
+        "Automatic summaries keep track of client calls, tags, and booking requirements in real time.",
+        "Integrated communication settings and direct CRM linkages to keep your workflow fully synced."
     )
     val icons = listOf(
         Icons.Rounded.PhoneInTalk,
         Icons.Rounded.GraphicEq,
-        Icons.Rounded.Security
+        Icons.Rounded.Settings
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .drawBehind {
-                drawCircle(
-                    color = ElectricSapphire.copy(alpha = 0.12f),
-                    radius = 350.dp.toPx(),
-                    center = Offset(if (currentPage == 0) 50f else if (currentPage == 1) size.width / 2 else size.width - 50f, size.height * 0.7f)
-                )
-            }
+            .background(KimiCream)
             .statusBarsPadding()
             .navigationBarsPadding()
             .padding(24.dp),
@@ -239,9 +247,10 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
                     modifier = Modifier.minimumInteractiveComponentSize()
                 ) {
                     Text(
-                        text = "SKIP TO TERMINAL",
+                        text = "SKIP TO LOGIN",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = SilverFrost,
+                            color = KimiBurgundy,
+                            fontWeight = FontWeight.Bold,
                             letterSpacing = 1.sp
                         )
                     )
@@ -256,27 +265,27 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
             ) {
                 Box(
                     modifier = Modifier
-                        .size(140.dp)
-                        .background(RichNavy, CircleShape)
-                        .border(1.dp, MutedBlueGlow.copy(alpha = 0.4f), CircleShape),
+                        .size(150.dp)
+                        .background(KimiWhite, CircleShape)
+                        .border(1.dp, KimiDarkPeach, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = icons[currentPage],
                         contentDescription = headers[currentPage],
-                        tint = ElectricSapphire,
-                        modifier = Modifier.size(64.dp)
+                        tint = KimiBurgundy,
+                        modifier = Modifier.size(70.dp)
                     )
                 }
 
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(44.dp))
 
                 Text(
                     text = headers[currentPage],
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = Color.White,
+                        color = KimiCharcoal,
                         fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
+                        letterSpacing = 0.5.sp
                     ),
                     textAlign = TextAlign.Center
                 )
@@ -285,12 +294,12 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
 
                 Text(
                     text = descriptions[currentPage],
-                    style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost),
+                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 20.dp)
                 )
 
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(36.dp))
 
                 // Page indicator dots
                 Row(
@@ -300,17 +309,15 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
                     repeat(3) { index ->
                         Box(
                             modifier = Modifier
-                                .padding(horizontal = 4.dp)
+                                .padding(horizontal = 5.dp)
                                 .size(if (index == currentPage) 12.dp else 8.dp)
                                 .background(
-                                    color = if (index == currentPage) ElectricSapphire else RichNavy,
+                                    color = if (index == currentPage) KimiBurgundy else KimiWhite,
                                     shape = CircleShape
                                 )
                                 .border(
                                     width = 1.dp,
-                                    color = if (index == currentPage) ElectricSapphire else MutedBlueGlow.copy(
-                                        alpha = 0.5f
-                                    ),
+                                    color = KimiDarkPeach,
                                     shape = CircleShape
                                 )
                         )
@@ -329,8 +336,8 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
                 if (currentPage > 0) {
                     OutlinedButton(
                         onClick = { currentPage-- },
-                        border = BorderStroke(1.dp, MutedBlueGlow.copy(alpha = 0.6f)),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = SilverFrost),
+                        border = BorderStroke(1.dp, KimiDarkPeach),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = KimiBurgundy),
                         shape = RoundedCornerShape(24.dp),
                         modifier = Modifier.height(48.dp)
                     ) {
@@ -351,14 +358,14 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
                             viewModel.setNavigationState(AppNavigationState.LOGIN)
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
                     shape = RoundedCornerShape(24.dp),
                     modifier = Modifier.height(48.dp)
                 ) {
                     Text(
-                        text = if (currentPage == 2) "ENTER TERMINAL" else "NEXT NODE",
+                        text = if (currentPage == 2) "ENTER APP" else "NEXT",
                         style = MaterialTheme.typography.labelLarge.copy(
-                            color = Color.White,
+                            color = KimiPeach,
                             letterSpacing = 1.sp
                         )
                     )
@@ -370,18 +377,19 @@ fun OnboardingScreen(viewModel: AetherViewModel) {
 
 // ---------------- LOGIN SCREEN ----------------
 @Composable
-fun LoginScreen(viewModel: AetherViewModel) {
-    var email by remember { mutableStateOf("jini96x@gmail.com") }
-    var keyPhrase by remember { mutableStateOf("••••••••") }
+fun KimiLoginScreen(viewModel: KimiViewModel) {
+    var email by remember { mutableStateOf("client@kimi.com") }
+    var password by remember { mutableStateOf("••••••••") }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(KimiCream)
             .drawBehind {
                 drawCircle(
-                    color = ElectricSapphire.copy(alpha = 0.14f),
-                    radius = 450.dp.toPx(),
-                    center = Offset(size.width * 0.8f, size.height * 0.2f)
+                    color = KimiPeach.copy(alpha = 0.5f),
+                    radius = 400.dp.toPx(),
+                    center = Offset(size.width * 0.9f, size.height * 0.1f)
                 )
             },
         contentAlignment = Alignment.Center
@@ -393,42 +401,39 @@ fun LoginScreen(viewModel: AetherViewModel) {
                 .padding(28.dp)
         ) {
             Icon(
-                imageVector = Icons.Rounded.Security,
-                contentDescription = "Shield Guard",
-                tint = ElectricSapphire,
+                imageVector = Icons.Rounded.Settings,
+                contentDescription = "Gear",
+                tint = KimiBurgundy,
                 modifier = Modifier
                     .size(64.dp)
-                    .padding(bottom = 8.dp)
+                    .padding(bottom = 12.dp)
             )
 
             Text(
-                text = "ACCESS CONTROL",
+                text = "SIGN IN",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    letterSpacing = 3.sp,
-                    color = Color.White
+                    letterSpacing = 2.sp,
+                    color = KimiBurgundy
                 )
             )
 
             Text(
-                text = "Authorize Aether Operator Credentials",
-                style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost),
+                text = "Enter Kimi Operator Credentials",
+                style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray),
                 modifier = Modifier.padding(top = 4.dp, bottom = 32.dp)
             )
 
-            // Glassmorphism login card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        Brush.linearGradient(
-                            listOf(MutedBlueGlow.copy(alpha = 0.4f), Color.Transparent)
-                        ),
-                        RoundedCornerShape(24.dp)
+                        KimiDarkPeach,
+                        RoundedCornerShape(28.dp)
                     ),
-                shape = RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = RichNavy.copy(alpha = 0.85f))
+                shape = RoundedCornerShape(28.dp),
+                colors = CardDefaults.cardColors(containerColor = KimiWhite)
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
@@ -437,33 +442,33 @@ fun LoginScreen(viewModel: AetherViewModel) {
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
-                        label = { Text("OPERATOR ID / EMAIL", color = SilverFrost) },
+                        label = { Text("OPERATOR EMAIL", color = KimiWarmGray) },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ElectricSapphire,
-                            unfocusedBorderColor = MutedBlueGlow.copy(alpha = 0.4f),
-                            focusedLabelColor = ElectricSapphire,
-                            unfocusedLabelColor = SilverFrost,
-                            focusedTextColor = SoftIceWhite,
-                            unfocusedTextColor = SoftIceWhite
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedLabelColor = KimiBurgundy,
+                            unfocusedLabelColor = KimiWarmGray,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
                         ),
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(14.dp)
                     )
 
                     OutlinedTextField(
-                        value = keyPhrase,
-                        onValueChange = { keyPhrase = it },
-                        label = { Text("PASSKEY / CRIPT TOKEN", color = SilverFrost) },
+                        value = password,
+                        onValueChange = { password = it },
+                        label = { Text("PASSWORD", color = KimiWarmGray) },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ElectricSapphire,
-                            unfocusedBorderColor = MutedBlueGlow.copy(alpha = 0.4f),
-                            focusedLabelColor = ElectricSapphire,
-                            unfocusedLabelColor = SilverFrost,
-                            focusedTextColor = SoftIceWhite,
-                            unfocusedTextColor = SoftIceWhite
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedLabelColor = KimiBurgundy,
+                            unfocusedLabelColor = KimiWarmGray,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
                         ),
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = RoundedCornerShape(14.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                     )
 
@@ -471,18 +476,19 @@ fun LoginScreen(viewModel: AetherViewModel) {
 
                     Button(
                         onClick = { viewModel.setNavigationState(AppNavigationState.MAIN) },
-                        colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                        shape = RoundedCornerShape(16.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(52.dp)
+                            .height(54.dp)
                             .testTag("login_button")
                     ) {
                         Text(
-                            text = "AUTHORIZE LINK",
+                            text = "SIGN IN",
                             style = MaterialTheme.typography.labelLarge.copy(
-                                color = Color.White,
-                                letterSpacing = 1.5.sp
+                                color = KimiPeach,
+                                letterSpacing = 1.5.sp,
+                                fontWeight = FontWeight.Bold
                             )
                         )
                     }
@@ -498,8 +504,8 @@ fun LoginScreen(viewModel: AetherViewModel) {
                 Text(
                     text = "BYPASS / DEMO MODE",
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = MutedBlueGlow,
-                        letterSpacing = 2.sp,
+                        color = KimiBurgundy,
+                        letterSpacing = 1.5.sp,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -510,72 +516,73 @@ fun LoginScreen(viewModel: AetherViewModel) {
 
 // ---------------- MAIN APP WRAPPER CONTAINER ----------------
 @Composable
-fun MainDashboardContainer(viewModel: AetherViewModel) {
+fun KimiMainDashboardContainer(viewModel: KimiViewModel) {
     val currentTab by viewModel.currentTab.collectAsState()
     val isRooted by viewModel.isDeviceRooted.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = MidnightBlue,
+        containerColor = KimiCream,
         bottomBar = {
-            // Luxurious bottom navigation dock with glowing line indicator
+            // Elegant burgundy bottom navigation dock matching Image 1
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MidnightBlue)
+                    .background(KimiCream)
                     .windowInsetsPadding(WindowInsets.navigationBars)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(68.dp)
+                        .height(72.dp)
                         .border(
                             1.dp,
-                            MutedBlueGlow.copy(alpha = 0.25f),
-                            RoundedCornerShape(24.dp)
+                            KimiDarkPeach.copy(alpha = 0.5f),
+                            RoundedCornerShape(32.dp)
                         ),
-                    colors = CardDefaults.cardColors(containerColor = RichNavy.copy(alpha = 0.92f)),
-                    shape = RoundedCornerShape(24.dp)
+                    colors = CardDefaults.cardColors(containerColor = KimiBurgundy),
+                    shape = RoundedCornerShape(32.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        TabNavItem(
+                        KimiTabNavItem(
                             imageVector = Icons.Default.AutoGraph,
-                            label = "Core",
+                            label = "Dashboard",
                             selected = currentTab == MainTab.DASHBOARD,
                             onClick = { viewModel.selectTab(MainTab.DASHBOARD) }
                         )
-                        TabNavItem(
+                        KimiTabNavItem(
                             imageVector = Icons.Default.RecordVoiceOver,
                             label = "Agents",
                             selected = currentTab == MainTab.AGENTS,
                             onClick = { viewModel.selectTab(MainTab.AGENTS) }
                         )
-                        TabNavItem(
+                        KimiTabNavItem(
                             imageVector = Icons.Default.Campaign,
                             label = "Campaigns",
                             selected = currentTab == MainTab.CAMPAIGNS,
                             onClick = { viewModel.selectTab(MainTab.CAMPAIGNS) }
                         )
-                        TabNavItem(
+                        KimiTabNavItem(
                             imageVector = Icons.Default.PhoneInTalk,
-                            label = "Dispatch",
+                            label = "Dialer",
                             selected = currentTab == MainTab.LIVE_CALL,
                             onClick = { viewModel.selectTab(MainTab.LIVE_CALL) }
                         )
-                        TabNavItem(
-                            imageVector = Icons.Default.Terminal,
+                        KimiTabNavItem(
+                            imageVector = Icons.Default.Bolt,
                             label = "Rules",
                             selected = currentTab == MainTab.AUTOMATION,
                             onClick = { viewModel.selectTab(MainTab.AUTOMATION) }
                         )
-                        TabNavItem(
-                            imageVector = if (isRooted) Icons.Default.Security else Icons.Default.Settings,
-                            label = if (isRooted) "Root" else "System",
+                        KimiTabNavItem(
+                            imageVector = Icons.Default.Settings,
+                            label = "Settings",
                             selected = currentTab == MainTab.ACCOUNT,
                             onClick = { viewModel.selectTab(MainTab.ACCOUNT) }
                         )
@@ -594,7 +601,7 @@ fun MainDashboardContainer(viewModel: AetherViewModel) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 12.dp),
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -602,44 +609,39 @@ fun MainDashboardContainer(viewModel: AetherViewModel) {
                     Box(
                         modifier = Modifier
                             .size(10.dp)
-                            .background(ElectricSapphire, CircleShape)
+                            .background(KimiBurgundy, CircleShape)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = "ÆTHER CORE",
+                        text = "KIMI WORKSPACE",
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color.White,
-                            letterSpacing = 2.sp
+                            color = KimiBurgundy,
+                            letterSpacing = 1.5.sp
                         )
                     )
                 }
 
                 // Premium status pills
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Box(
+                    modifier = Modifier
+                        .background(KimiWhite, RoundedCornerShape(12.dp))
+                        .border(1.dp, KimiDarkPeach, RoundedCornerShape(12.dp))
+                        .padding(horizontal = 12.dp, vertical = 4.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .background(DarkGreyNavy, RoundedCornerShape(12.dp))
-                            .border(1.dp, MutedBlueGlow.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                            .padding(horizontal = 12.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = if (isRooted) "KERNEL LINK ACTIVE-R" else "USERLAND BYPASS",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = ElectricSapphire,
-                                fontSize = 9.sp,
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = 0.5.sp
-                            )
+                    Text(
+                        text = if (isRooted) "DIRECT LINK" else "STANDARD CHANNEL",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = KimiBurgundy,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
                         )
-                    }
+                    )
                 }
             }
 
-            Divider(color = MutedBlueGlow.copy(alpha = 0.15f), thickness = 1.dp)
+            Divider(color = KimiDarkPeach.copy(alpha = 0.4f), thickness = 1.dp)
 
             // Dynamic view selector
             Box(
@@ -648,12 +650,12 @@ fun MainDashboardContainer(viewModel: AetherViewModel) {
                     .fillMaxWidth()
             ) {
                 when (currentTab) {
-                    MainTab.DASHBOARD -> DashboardTab(viewModel)
-                    MainTab.AGENTS -> AgentTab(viewModel)
-                    MainTab.CAMPAIGNS -> CampaignTab(viewModel)
-                    MainTab.LIVE_CALL -> DispatchTab(viewModel)
-                    MainTab.AUTOMATION -> AutomationTab(viewModel)
-                    MainTab.ACCOUNT -> AccountTab(viewModel)
+                    MainTab.DASHBOARD -> KimiDashboardTab(viewModel)
+                    MainTab.AGENTS -> KimiAgentTab(viewModel)
+                    MainTab.CAMPAIGNS -> KimiCampaignTab(viewModel)
+                    MainTab.LIVE_CALL -> KimiDispatchTab(viewModel)
+                    MainTab.AUTOMATION -> KimiAutomationTab(viewModel)
+                    MainTab.ACCOUNT -> KimiAccountTab(viewModel)
                 }
             }
         }
@@ -661,14 +663,14 @@ fun MainDashboardContainer(viewModel: AetherViewModel) {
 }
 
 @Composable
-fun RowScope.TabNavItem(
+fun RowScope.KimiTabNavItem(
     imageVector: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     selected: Boolean,
     onClick: () -> Unit
 ) {
     val alpha by animateFloatAsState(if (selected) 1.0f else 0.5f, label = "alpha")
-    val scale by animateFloatAsState(if (selected) 1.1f else 1.0f, label = "scale")
+    val scale by animateFloatAsState(if (selected) 1.08f else 1.0f, label = "scale")
 
     Column(
         modifier = Modifier
@@ -681,15 +683,15 @@ fun RowScope.TabNavItem(
         Icon(
             imageVector = imageVector,
             contentDescription = label,
-            tint = if (selected) ElectricSapphire else SilverFrost,
+            tint = if (selected) KimiPeach else KimiPeach.copy(alpha = 0.5f),
             modifier = Modifier.size(24.dp)
         )
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         Text(
             text = label,
             fontSize = 9.sp,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-            color = if (selected) SoftIceWhite else SilverFrost,
+            color = if (selected) KimiPeach else KimiPeach.copy(alpha = 0.5f),
             letterSpacing = 0.5.sp
         )
     }
@@ -697,7 +699,7 @@ fun RowScope.TabNavItem(
 
 // ---------------- DASHBOARD TAB ----------------
 @Composable
-fun DashboardTab(viewModel: AetherViewModel) {
+fun KimiDashboardTab(viewModel: KimiViewModel) {
     val callHistory by viewModel.callHistory.collectAsState(initial = emptyList())
     val agentsState by viewModel.aiAgents.collectAsState(initial = emptyList())
     val campaignList by viewModel.campaigns.collectAsState(initial = emptyList())
@@ -713,38 +715,38 @@ fun DashboardTab(viewModel: AetherViewModel) {
         item {
             Column {
                 Text(
-                    text = "Aether Executive Status",
+                    text = "System Status",
                     style = MaterialTheme.typography.displayMedium.copy(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.White
+                        color = KimiBurgundy
                     )
                 )
                 Text(
-                    text = "Orchestrating intelligent interactions with continuous SIP links.",
-                    style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                    text = "Overview of dialer volume, campaigns, and call assistants.",
+                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                 )
             }
         }
 
-        // Metrics Grid (Beautiful Floating Cards)
+        // Metrics Grid (Beautiful Rounded White Cards)
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                MetricCard(
+                KimiMetricCard(
                     modifier = Modifier.weight(1f),
                     title = "Today's Calls",
                     value = "${callHistory.size * 2 + 14}",
-                    subtitle = "100% autonomous",
+                    subtitle = "Dialed calls",
                     icon = Icons.Default.Phone
                 )
-                MetricCard(
+                KimiMetricCard(
                     modifier = Modifier.weight(1f),
                     title = "Active Agents",
                     value = "${agentsState.size}",
-                    subtitle = "All cores healthy",
+                    subtitle = "Profiles active",
                     icon = Icons.Default.RecordVoiceOver
                 )
             }
@@ -755,42 +757,43 @@ fun DashboardTab(viewModel: AetherViewModel) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                MetricCard(
+                KimiMetricCard(
                     modifier = Modifier.weight(1f),
-                    title = "Conversations",
+                    title = "Contacts",
                     value = "${campaignList.sumOf { it.totalContacts }}",
-                    subtitle = "Synced pipeline",
+                    subtitle = "In database",
                     icon = Icons.Default.Contacts
                 )
-                MetricCard(
+                KimiMetricCard(
                     modifier = Modifier.weight(1f),
                     title = "Success Rate",
                     value = "88.5%",
-                    subtitle = "Premium threshold",
+                    subtitle = "Average success",
                     icon = Icons.Default.TrendingUp
                 )
             }
         }
 
-        // Animated Success Trend Line Graphic (Draw in Custom Canvas)
+        // Animated Success Trend Line Graphic (Soft, warm line chart)
         item {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        MutedBlueGlow.copy(alpha = 0.2f),
-                        RoundedCornerShape(24.dp)
+                        KimiDarkPeach.copy(alpha = 0.6f),
+                        RoundedCornerShape(28.dp)
                     ),
-                colors = CardDefaults.cardColors(containerColor = RichNavy),
-                shape = RoundedCornerShape(24.dp)
+                colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                shape = RoundedCornerShape(28.dp)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "SOVEREIGN AGENT CONVERSION TREND",
+                        text = "CALL SUCCESS TREND",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = SilverFrost,
-                            letterSpacing = 1.sp
+                            color = KimiBurgundy,
+                            letterSpacing = 1.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -805,7 +808,6 @@ fun DashboardTab(viewModel: AetherViewModel) {
                         val path = Path()
 
                         points.forEachIndexed { i, p ->
-                            // Map values to Canvas coordinates
                             val x = i * widthGap
                             val y = size.height - (p / 120f) * size.height
                             if (i == 0) {
@@ -817,11 +819,11 @@ fun DashboardTab(viewModel: AetherViewModel) {
 
                         drawPath(
                             path = path,
-                            color = ElectricSapphire,
+                            color = KimiBurgundy,
                             style = Stroke(width = 3.dp.toPx())
                         )
 
-                        // Draw glowing gradient underneath
+                        // Smooth gradient fill below
                         val fillPath = Path().apply {
                             addPath(path)
                             lineTo(size.width, size.height)
@@ -831,13 +833,13 @@ fun DashboardTab(viewModel: AetherViewModel) {
                         drawPath(
                             path = fillPath,
                             brush = Brush.verticalGradient(
-                                colors = listOf(ElectricSapphire.copy(alpha = 0.3f), Color.Transparent)
+                                colors = listOf(KimiPeach, Color.Transparent)
                             )
                         )
 
-                        // Highlight final bullet points
+                        // Highlight final coordinate point
                         drawCircle(
-                            color = ElectricSapphire,
+                            color = KimiBurgundy,
                             radius = 6.dp.toPx(),
                             center = Offset(size.width, size.height - (points[points.size - 1] / 120f) * size.height)
                         )
@@ -845,8 +847,8 @@ fun DashboardTab(viewModel: AetherViewModel) {
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
-                        text = "Autonomous pipelines registered 88.5% conversion rating over past 7 cycles.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                        text = "Average dialer performance registered at 88.5% over this week's cycles.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp)
                     )
                 }
             }
@@ -855,10 +857,11 @@ fun DashboardTab(viewModel: AetherViewModel) {
         // Recent Transaction Activity Logs
         item {
             Text(
-                text = "RECENT CONCIERGE TRANSACTIONS",
+                text = "RECENT OUTBOUND CALL ACTIVITY",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = SilverFrost,
-                    letterSpacing = 1.sp
+                    color = KimiBurgundy,
+                    letterSpacing = 1.sp,
+                    fontWeight = FontWeight.Bold
                 )
             )
         }
@@ -871,19 +874,19 @@ fun DashboardTab(viewModel: AetherViewModel) {
                         .padding(24.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("No records compiled yet. Tap Dispatch to dial client.", color = SilverFrost)
+                    Text("No records compiled yet. Tap Dialer to start a call.", color = KimiWarmGray)
                 }
             }
         } else {
             items(callHistory) { call ->
-                CallHistoryCard(call)
+                KimiCallHistoryCard(call)
             }
         }
     }
 }
 
 @Composable
-fun MetricCard(
+fun KimiMetricCard(
     modifier: Modifier = Modifier,
     title: String,
     value: String,
@@ -894,11 +897,11 @@ fun MetricCard(
         modifier = modifier
             .border(
                 1.dp,
-                MutedBlueGlow.copy(alpha = 0.2f),
-                RoundedCornerShape(20.dp)
+                KimiDarkPeach.copy(alpha = 0.5f),
+                RoundedCornerShape(24.dp)
             ),
-        colors = CardDefaults.cardColors(containerColor = RichNavy),
-        shape = RoundedCornerShape(20.dp)
+        colors = CardDefaults.cardColors(containerColor = KimiWhite),
+        shape = RoundedCornerShape(24.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -909,39 +912,46 @@ fun MetricCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = title.uppercase(),
+                    text = title,
                     style = MaterialTheme.typography.labelSmall.copy(
-                        color = SilverFrost,
-                        letterSpacing = 1.sp,
+                        color = KimiWarmGray,
+                        letterSpacing = 0.5.sp,
                         fontWeight = FontWeight.Bold
                     )
                 )
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = ElectricSapphire,
-                    modifier = Modifier.size(18.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(KimiPeach, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = KimiBurgundy,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = value,
                 style = MaterialTheme.typography.displayMedium.copy(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = Color.White
+                    color = KimiBurgundy
                 )
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = SilverFrost.copy(alpha = 0.7f),
-                    fontSize = 11.sp
+                    color = KimiWarmGray,
+                    fontSize = 12.sp
                 )
             )
         }
@@ -949,17 +959,20 @@ fun MetricCard(
 }
 
 @Composable
-fun CallHistoryCard(call: CallHistory) {
+fun KimiCallHistoryCard(call: CallHistory) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { showDialog = true }
             .border(
                 1.dp,
-                MutedBlueGlow.copy(alpha = 0.15f),
-                RoundedCornerShape(16.dp)
+                KimiDarkPeach.copy(alpha = 0.4f),
+                RoundedCornerShape(20.dp)
             ),
-        colors = CardDefaults.cardColors(containerColor = DarkGreyNavy),
-        shape = RoundedCornerShape(16.dp)
+        colors = CardDefaults.cardColors(containerColor = KimiWhite),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -971,14 +984,14 @@ fun CallHistoryCard(call: CallHistory) {
                     Icon(
                         imageVector = if (call.direction == "Inbound") Icons.Default.CallReceived else Icons.Default.CallMade,
                         contentDescription = call.direction,
-                        tint = ElectricSapphire,
+                        tint = KimiBurgundy,
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = call.contactName,
                         style = MaterialTheme.typography.titleMedium.copy(
-                            color = Color.White,
+                            color = KimiCharcoal,
                             fontWeight = FontWeight.Bold
                         )
                     )
@@ -986,14 +999,15 @@ fun CallHistoryCard(call: CallHistory) {
 
                 Box(
                     modifier = Modifier
-                        .background(ElectricSapphire.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
+                        .background(KimiPeach, RoundedCornerShape(8.dp))
                         .padding(horizontal = 8.dp, vertical = 2.dp)
                 ) {
                     Text(
                         text = call.sentiment,
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = MutedBlueGlow,
-                            fontSize = 9.sp
+                            color = KimiBurgundy,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 10.sp
                         )
                     )
                 }
@@ -1004,7 +1018,7 @@ fun CallHistoryCard(call: CallHistory) {
             Text(
                 text = call.transcript,
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = SilverFrost,
+                    color = KimiWarmGray,
                     fontSize = 13.sp
                 ),
                 maxLines = 2,
@@ -1020,27 +1034,54 @@ fun CallHistoryCard(call: CallHistory) {
             ) {
                 Text(
                     text = call.phoneNumber,
-                    style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost.copy(alpha = 0.6f))
+                    style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                 )
                 Text(
                     text = "${call.durationSeconds} seconds",
-                    style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost.copy(alpha = 0.6f))
+                    style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                 )
             }
         }
     }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Call Transcript: ${call.contactName}", color = KimiBurgundy, fontWeight = FontWeight.Bold) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(text = call.transcript, color = KimiCharcoal, style = MaterialTheme.typography.bodyMedium)
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { showDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy)
+                ) {
+                    Text("Close", color = KimiPeach)
+                }
+            },
+            containerColor = KimiWhite,
+            shape = RoundedCornerShape(24.dp)
+        )
+    }
 }
 
-// ---------------- VOICE STUDIO / AGENT TAB ----------------
+// ---------------- AGENT STUDIO TAB ----------------
 @Composable
-fun AgentTab(viewModel: AetherViewModel) {
+fun KimiAgentTab(viewModel: KimiViewModel) {
     val agents by viewModel.aiAgents.collectAsState(initial = emptyList())
     val selected by viewModel.selectedAgent.collectAsState()
 
     var showCreateDialog by remember { mutableStateOf(false) }
     var newName by remember { mutableStateOf("") }
     var newSystemPrompt by remember { mutableStateOf("") }
-    var selectedVoice by remember { mutableStateOf("Aether Male (Pro)") }
+    var selectedVoice by remember { mutableStateOf("Kimi Male (Natural)") }
 
     LazyColumn(
         modifier = Modifier
@@ -1057,57 +1098,57 @@ fun AgentTab(viewModel: AetherViewModel) {
             ) {
                 Column {
                     Text(
-                        text = "AI Agent Studio",
+                        text = "Call Agent Studio",
                         style = MaterialTheme.typography.displayMedium.copy(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color.White
+                            color = KimiBurgundy
                         )
                     )
                     Text(
-                        text = "Customize sovereign representative nodes.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                        text = "Configure custom profiles for client communication.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                     )
                 }
 
                 Button(
                     onClick = { showCreateDialog = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                    shape = RoundedCornerShape(14.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "New Agent", tint = Color.White)
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "New Agent", tint = KimiPeach)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Incept", color = Color.White)
+                    Text("New", color = KimiPeach)
                 }
             }
         }
 
-        // Active selection Waveform selector
+        // Active selection slider controls
         selected?.let { agent ->
             item {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .border(
-                            2.dp,
-                            ElectricSapphire.copy(alpha = 0.4f),
-                            RoundedCornerShape(24.dp)
+                            1.dp,
+                            KimiDarkPeach,
+                            RoundedCornerShape(28.dp)
                         ),
-                    colors = CardDefaults.cardColors(containerColor = RichNavy),
-                    shape = RoundedCornerShape(24.dp)
+                    colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                    shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(48.dp)
-                                    .background(ElectricSapphire.copy(alpha = 0.15f), CircleShape),
+                                    .background(KimiPeach, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.RecordVoiceOver,
                                     contentDescription = null,
-                                    tint = ElectricSapphire
+                                    tint = KimiBurgundy
                                 )
                             }
                             Spacer(modifier = Modifier.width(16.dp))
@@ -1115,29 +1156,30 @@ fun AgentTab(viewModel: AetherViewModel) {
                                 Text(
                                     text = agent.name,
                                     style = MaterialTheme.typography.titleMedium.copy(
-                                        color = Color.White,
+                                        color = KimiCharcoal,
                                         fontWeight = FontWeight.Bold
                                     )
                                 )
                                 Text(
-                                    text = "Active Voice Preset: ${agent.voiceType}",
-                                    style = MaterialTheme.typography.bodyMedium.copy(color = MutedBlueGlow)
+                                    text = "Voice Preset: ${agent.voiceType}",
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiBurgundy, fontWeight = FontWeight.SemiBold)
                                 )
                             }
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Voice waveform simulation drawing
                         Text(
-                            text = "VOICE CONTOUR VISUALIZER [100% QUALITY]",
+                            text = "VOICE WAVEFORM",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = SilverFrost,
-                                letterSpacing = 1.sp
+                                color = KimiBurgundy,
+                                letterSpacing = 1.sp,
+                                fontWeight = FontWeight.Bold
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
 
+                        // Waveform visualization
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -1151,17 +1193,16 @@ fun AgentTab(viewModel: AetherViewModel) {
                                     modifier = Modifier
                                         .weight(1f)
                                         .height(heightVal.dp)
-                                        .background(ElectricSapphire, RoundedCornerShape(2.dp))
-                                )
+                                        .background(KimiBurgundy, RoundedCornerShape(2.dp))
+                                    )
                             }
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Sliders for dynamic response attributes
                         Text(
                             text = "Speech Pitch Modulation",
-                            style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                            style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                         )
                         var tempPitch by remember { mutableStateOf(agent.pitch) }
                         Slider(
@@ -1169,15 +1210,15 @@ fun AgentTab(viewModel: AetherViewModel) {
                             onValueChange = { tempPitch = it },
                             valueRange = 0.5f..1.5f,
                             colors = SliderDefaults.colors(
-                                thumbColor = ElectricSapphire,
-                                activeTrackColor = ElectricSapphire,
-                                inactiveTrackColor = MidnightBlue
+                                thumbColor = KimiBurgundy,
+                                activeTrackColor = KimiBurgundy,
+                                inactiveTrackColor = KimiCream
                             )
                         )
 
                         Text(
                             text = "Orator Pacing Speed",
-                            style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                            style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                         )
                         var tempSpeed by remember { mutableStateOf(agent.speed) }
                         Slider(
@@ -1185,29 +1226,29 @@ fun AgentTab(viewModel: AetherViewModel) {
                             onValueChange = { tempSpeed = it },
                             valueRange = 0.5f..1.5f,
                             colors = SliderDefaults.colors(
-                                thumbColor = ElectricSapphire,
-                                activeTrackColor = ElectricSapphire,
-                                inactiveTrackColor = MidnightBlue
+                                thumbColor = KimiBurgundy,
+                                activeTrackColor = KimiBurgundy,
+                                inactiveTrackColor = KimiCream
                             )
                         )
 
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Text(
-                            text = "Core Sovereign Constraints Model Prompt",
-                            style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                            text = "Agent System Prompt / Instructions",
+                            style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                         )
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                .background(DarkGreyNavy, RoundedCornerShape(12.dp))
-                                .border(1.dp, MutedBlueGlow.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+                                .background(KimiLightRose, RoundedCornerShape(14.dp))
+                                .border(1.dp, KimiDarkPeach, RoundedCornerShape(14.dp))
                                 .padding(12.dp)
                         ) {
                             Text(
                                 text = agent.systemPrompt,
-                                style = MaterialTheme.typography.bodyMedium.copy(color = SoftIceWhite, fontSize = 13.sp)
+                                style = MaterialTheme.typography.bodyMedium.copy(color = KimiCharcoal, fontSize = 13.sp)
                             )
                         }
                     }
@@ -1217,10 +1258,11 @@ fun AgentTab(viewModel: AetherViewModel) {
 
         item {
             Text(
-                text = "COMMISSIONED SOVEREIGN AGENTS",
+                text = "COMMISSIONED AGENTS",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = SilverFrost,
-                    letterSpacing = 1.sp
+                    color = KimiBurgundy,
+                    letterSpacing = 1.sp,
+                    fontWeight = FontWeight.Bold
                 )
             )
         }
@@ -1233,11 +1275,11 @@ fun AgentTab(viewModel: AetherViewModel) {
                     .clickable { viewModel.setSelectedAgent(agent) }
                     .border(
                         1.dp,
-                        if (selected?.id == agent.id) ElectricSapphire else MutedBlueGlow.copy(alpha = 0.15f),
-                        RoundedCornerShape(16.dp)
+                        if (selected?.id == agent.id) KimiBurgundy else KimiDarkPeach.copy(alpha = 0.4f),
+                        RoundedCornerShape(20.dp)
                     ),
-                colors = CardDefaults.cardColors(containerColor = DarkGreyNavy),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -1250,13 +1292,13 @@ fun AgentTab(viewModel: AetherViewModel) {
                         Box(
                             modifier = Modifier
                                 .size(36.dp)
-                                .background(ElectricSapphire.copy(alpha = 0.1f), CircleShape),
+                                .background(KimiPeach, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.GraphicEq,
                                 contentDescription = null,
-                                tint = ElectricSapphire,
+                                tint = KimiBurgundy,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -1265,21 +1307,21 @@ fun AgentTab(viewModel: AetherViewModel) {
                             Text(
                                 text = agent.name,
                                 style = MaterialTheme.typography.bodyLarge.copy(
-                                    color = Color.White,
+                                    color = KimiCharcoal,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
                             Text(
-                                text = "PSTN Voice: ${agent.voiceType}",
-                                style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                                text = "Voice Preset: ${agent.voiceType}",
+                                style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                             )
                         }
                     }
 
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Edit Parameters",
-                        tint = SilverFrost,
+                        contentDescription = "Edit Details",
+                        tint = KimiBurgundy,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -1287,11 +1329,11 @@ fun AgentTab(viewModel: AetherViewModel) {
         }
     }
 
-    // Modal Builder Dialog
+    // Modal Create Agent
     if (showCreateDialog) {
         AlertDialog(
             onDismissRequest = { showCreateDialog = false },
-            title = { Text("Incept New Voice Rep", color = Color.White) },
+            title = { Text("Create Call Agent", color = KimiBurgundy, fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     OutlinedTextField(
@@ -1299,38 +1341,48 @@ fun AgentTab(viewModel: AetherViewModel) {
                         onValueChange = { newName = it },
                         label = { Text("Agent Name") },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
-                        )
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
 
                     OutlinedTextField(
                         value = newSystemPrompt,
                         onValueChange = { newSystemPrompt = it },
-                        label = { Text("Core System Constraint Script") },
+                        label = { Text("Core Prompt Script") },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
-                        )
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
 
-                    // Select voice dropdown simulation
-                    Text("Select Voice Engine Preset", color = SilverFrost)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        listOf("Aether Male (Pro)", "Nova Female (Satin)", "Echo Warm (Natural)").forEach { voice ->
+                    Text("Select Voice Engine Preset", color = KimiWarmGray, style = MaterialTheme.typography.labelSmall)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        listOf("Kimi Male (Natural)", "Kimi Female (Warm)", "Kimi Outbound (Standard)").forEach { voice ->
                             Box(
                                 modifier = Modifier
                                     .background(
-                                        if (selectedVoice == voice) ElectricSapphire else DarkGreyNavy,
-                                        RoundedCornerShape(8.dp)
+                                        if (selectedVoice == voice) KimiBurgundy else KimiCream,
+                                        RoundedCornerShape(10.dp)
                                     )
+                                    .border(1.dp, KimiDarkPeach, RoundedCornerShape(10.dp))
                                     .clickable { selectedVoice = voice }
-                                    .padding(8.dp)
+                                    .padding(horizontal = 10.dp, vertical = 8.dp)
                             ) {
                                 Text(
                                     text = voice.substringBefore(" "),
-                                    color = Color.White,
-                                    fontSize = 11.sp
+                                    color = if (selectedVoice == voice) KimiPeach else KimiCharcoal,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
@@ -1347,25 +1399,25 @@ fun AgentTab(viewModel: AetherViewModel) {
                             showCreateDialog = false
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy)
                 ) {
-                    Text("Commission Node", color = Color.White)
+                    Text("Save Agent", color = KimiPeach)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showCreateDialog = false }) {
-                    Text("Cancel", color = SilverFrost)
+                    Text("Cancel", color = KimiBurgundy)
                 }
             },
-            containerColor = RichNavy,
-            shape = RoundedCornerShape(20.dp)
+            containerColor = KimiWhite,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 }
 
 // ---------------- CAMPAIGN MANAGER TAB ----------------
 @Composable
-fun CampaignTab(viewModel: AetherViewModel) {
+fun KimiCampaignTab(viewModel: KimiViewModel) {
     val campaigns by viewModel.campaigns.collectAsState(initial = emptyList())
     val contacts by viewModel.contacts.collectAsState(initial = emptyList())
 
@@ -1376,7 +1428,7 @@ fun CampaignTab(viewModel: AetherViewModel) {
     var showContactModal by remember { mutableStateOf(false) }
     var cName by remember { mutableStateOf("") }
     var cPhone by remember { mutableStateOf("") }
-    var cTags by remember { mutableStateOf("VIP Lead, SaaS") }
+    var cTags by remember { mutableStateOf("VIP Lead, Standard") }
 
     LazyColumn(
         modifier = Modifier
@@ -1393,27 +1445,27 @@ fun CampaignTab(viewModel: AetherViewModel) {
             ) {
                 Column {
                     Text(
-                        text = "Automated Campaigns",
+                        text = "Outbound Campaigns",
                         style = MaterialTheme.typography.displayMedium.copy(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color.White
+                            color = KimiBurgundy
                         )
                     )
                     Text(
-                        text = "Track active outbound voice dialing flows.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                        text = "Track and deploy automated calling flows.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                     )
                 }
 
                 Button(
                     onClick = { showCampaignModal = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                    shape = RoundedCornerShape(14.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.PlusOne, contentDescription = null, tint = Color.White)
+                    Icon(imageVector = Icons.Default.PlusOne, contentDescription = null, tint = KimiPeach)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Rollout", color = Color.White)
+                    Text("Rollout", color = KimiPeach)
                 }
             }
         }
@@ -1425,11 +1477,11 @@ fun CampaignTab(viewModel: AetherViewModel) {
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        MutedBlueGlow.copy(alpha = 0.15f),
-                        RoundedCornerShape(20.dp)
+                        KimiDarkPeach.copy(alpha = 0.5f),
+                        RoundedCornerShape(24.dp)
                     ),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = RichNavy)
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.cardColors(containerColor = KimiWhite)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Row(
@@ -1440,22 +1492,23 @@ fun CampaignTab(viewModel: AetherViewModel) {
                         Text(
                             text = campaign.name,
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = Color.White,
+                                color = KimiCharcoal,
                                 fontWeight = FontWeight.Bold
                             )
                         )
                         Box(
                             modifier = Modifier
                                 .background(
-                                    if (campaign.status == "Active") ElectricSapphire.copy(alpha = 0.2f) else DarkGreyNavy,
-                                    RoundedCornerShape(8.dp)
+                                    if (campaign.status == "Active") KimiPeach else KimiCream,
+                                    RoundedCornerShape(10.dp)
                                 )
+                                .border(1.dp, KimiDarkPeach, RoundedCornerShape(10.dp))
                                 .padding(horizontal = 10.dp, vertical = 4.dp)
                         ) {
                             Text(
                                 text = campaign.status.uppercase(),
                                 style = MaterialTheme.typography.labelSmall.copy(
-                                    color = if (campaign.status == "Active") ElectricSapphire else SilverFrost,
+                                    color = KimiBurgundy,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -1464,12 +1517,11 @@ fun CampaignTab(viewModel: AetherViewModel) {
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Progress indicators
                     Text(
-                        text = "Dialing Completion Rate: ${campaign.completedContacts} / ${campaign.totalContacts}",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                        text = "Dialer Completed: ${campaign.completedContacts} / ${campaign.totalContacts}",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 13.sp)
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     val progressRatio = if (campaign.totalContacts > 0) {
                         campaign.completedContacts.toFloat() / campaign.totalContacts.toFloat()
@@ -1481,8 +1533,8 @@ fun CampaignTab(viewModel: AetherViewModel) {
                             .fillMaxWidth()
                             .height(8.dp)
                             .clip(RoundedCornerShape(4.dp)),
-                        color = ElectricSapphire,
-                        trackColor = MidnightBlue
+                        color = KimiBurgundy,
+                        trackColor = KimiCream
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -1492,20 +1544,20 @@ fun CampaignTab(viewModel: AetherViewModel) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("SOVEREIGN CONVERSIONS", style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost, fontSize = 9.sp))
-                            Text("${campaign.successRate}% Success", style = MaterialTheme.typography.titleSmall.copy(color = Color.White, fontWeight = FontWeight.Bold))
+                            Text("CALL CONVERSIONS", style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray, fontSize = 9.sp))
+                            Text("${campaign.successRate}% Success", style = MaterialTheme.typography.titleSmall.copy(color = KimiBurgundy, fontWeight = FontWeight.Bold))
                         }
 
                         Column {
-                            Text("TRUNK ROUTED_BY", style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost, fontSize = 9.sp))
-                            Text("Aether Core Engine", style = MaterialTheme.typography.titleSmall.copy(color = MutedBlueGlow, fontWeight = FontWeight.Bold))
+                            Text("ROUTING ENGINE", style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray, fontSize = 9.sp))
+                            Text("Kimi System Engine", style = MaterialTheme.typography.titleSmall.copy(color = KimiCharcoal, fontWeight = FontWeight.Bold))
                         }
                     }
                 }
             }
         }
 
-        // Contact Directory Module Header
+        // Contact Directory
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -1513,9 +1565,9 @@ fun CampaignTab(viewModel: AetherViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Operator Contacts Database",
+                    text = "Client Database",
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = Color.White,
+                        color = KimiBurgundy,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -1524,23 +1576,23 @@ fun CampaignTab(viewModel: AetherViewModel) {
                     onClick = { showContactModal = true },
                     modifier = Modifier.minimumInteractiveComponentSize()
                 ) {
-                    Text("+ Add VIP Lead", color = MutedBlueGlow, fontWeight = FontWeight.Bold)
+                    Text("+ Add VIP Lead", color = KimiBurgundy, fontWeight = FontWeight.Bold)
                 }
             }
         }
 
-        // Compact list of contacts in current CRM cache
+        // Compact list of contacts
         items(contacts) { contact ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        MutedBlueGlow.copy(alpha = 0.1f),
-                        RoundedCornerShape(16.dp)
+                        KimiDarkPeach.copy(alpha = 0.4f),
+                        RoundedCornerShape(20.dp)
                     ),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = DarkGreyNavy)
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = KimiWhite)
             ) {
                 Row(
                     modifier = Modifier
@@ -1553,25 +1605,26 @@ fun CampaignTab(viewModel: AetherViewModel) {
                         Text(
                             text = contact.name,
                             style = MaterialTheme.typography.bodyLarge.copy(
-                                color = Color.White,
+                                color = KimiCharcoal,
                                 fontWeight = FontWeight.Bold
                             )
                         )
                         Text(
                             text = "Phone: ${contact.phone} • Tag: ${contact.tags}",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp)
                         )
                     }
 
                     Box(
                         modifier = Modifier
-                            .background(ElectricSapphire.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .background(KimiPeach, RoundedCornerShape(10.dp))
+                            .border(1.dp, KimiDarkPeach, RoundedCornerShape(10.dp))
+                            .padding(horizontal = 10.dp, vertical = 4.dp)
                     ) {
                         Text(
                             text = contact.status,
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = ElectricSapphire,
+                                color = KimiBurgundy,
                                 fontWeight = FontWeight.Bold
                             )
                         )
@@ -1585,20 +1638,32 @@ fun CampaignTab(viewModel: AetherViewModel) {
     if (showCampaignModal) {
         AlertDialog(
             onDismissRequest = { showCampaignModal = false },
-            title = { Text("Launch Dialing Blast", color = Color.White) },
+            title = { Text("Launch Dialing Campaign", color = KimiBurgundy, fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     OutlinedTextField(
                         value = campName,
                         onValueChange = { campName = it },
-                        label = { Text("Campaign Identity ID") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        label = { Text("Campaign Identity Name") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                     OutlinedTextField(
                         value = targetVol,
                         onValueChange = { targetVol = it },
-                        label = { Text("Target Batch Volume") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        label = { Text("Target Volume") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                 }
             },
@@ -1615,18 +1680,18 @@ fun CampaignTab(viewModel: AetherViewModel) {
                             showCampaignModal = false
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy)
                 ) {
-                    Text("Provision Campaign", color = Color.White)
+                    Text("Provision Campaign", color = KimiPeach)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showCampaignModal = false }) {
-                    Text("Close", color = SilverFrost)
+                    Text("Cancel", color = KimiBurgundy)
                 }
             },
-            containerColor = RichNavy,
-            shape = RoundedCornerShape(20.dp)
+            containerColor = KimiWhite,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 
@@ -1634,26 +1699,44 @@ fun CampaignTab(viewModel: AetherViewModel) {
     if (showContactModal) {
         AlertDialog(
             onDismissRequest = { showContactModal = false },
-            title = { Text("Add Elite Lead to Vault", color = Color.White) },
+            title = { Text("Add Contact Lead", color = KimiBurgundy, fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     OutlinedTextField(
                         value = cName,
                         onValueChange = { cName = it },
                         label = { Text("Client Full Name") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                     OutlinedTextField(
                         value = cPhone,
                         onValueChange = { cPhone = it },
                         label = { Text("Phone Address (E.164)") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                     OutlinedTextField(
                         value = cTags,
                         onValueChange = { cTags = it },
-                        label = { Text("Qualification Tags") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        label = { Text("Tags") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                 }
             },
@@ -1667,25 +1750,25 @@ fun CampaignTab(viewModel: AetherViewModel) {
                             showContactModal = false
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy)
                 ) {
-                    Text("Commit Lead", color = Color.White)
+                    Text("Commit Lead", color = KimiPeach)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showContactModal = false }) {
-                    Text("Cancel", color = SilverFrost)
+                    Text("Cancel", color = KimiBurgundy)
                 }
             },
-            containerColor = RichNavy,
-            shape = RoundedCornerShape(20.dp)
+            containerColor = KimiWhite,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 }
 
 // ---------------- LIVE DISPATCH / DIALER TAB ----------------
 @Composable
-fun DispatchTab(viewModel: AetherViewModel) {
+fun KimiDispatchTab(viewModel: KimiViewModel) {
     val contacts by viewModel.contacts.collectAsState(initial = emptyList())
     val callState by viewModel.liveCallState.collectAsState()
     val activeName by viewModel.liveCallName.collectAsState()
@@ -1693,13 +1776,13 @@ fun DispatchTab(viewModel: AetherViewModel) {
     val transcript by viewModel.liveCallTranscript.collectAsState()
     val isSpeaking by viewModel.isAgentSpeaking.collectAsState()
 
-    // Animation to scale speaking wave indicator
+    // Breathing soft peach wave indicator
     val speechPulse = rememberInfiniteTransition(label = "pulseWave")
     val pulseSize by speechPulse.animateFloat(
-        initialValue = 110f,
-        targetValue = 145f,
+        initialValue = 100f,
+        targetValue = 130f,
         animationSpec = infiniteRepeatable(
-            animation = tween(1200, easing = FastOutSlowInEasing),
+            animation = tween(1200, easing = EaseInOutSine),
             repeatMode = RepeatMode.Reverse
         ),
         label = "pulse"
@@ -1719,26 +1802,27 @@ fun DispatchTab(viewModel: AetherViewModel) {
                 item {
                     Column {
                         Text(
-                            text = "Live Operator Dispatch",
+                            text = "Live Dialer Dispatch",
                             style = MaterialTheme.typography.displayMedium.copy(
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.ExtraBold,
-                                color = Color.White
+                                color = KimiBurgundy
                             )
                         )
                         Text(
-                            text = "Locate an existing client record below and trigger a simulated live AI outbound dialogue immediately.",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                            text = "Select an existing client contact below and trigger a simulated dial immediately.",
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                         )
                     }
                 }
 
                 item {
                     Text(
-                        text = "AVAILABLE TARGET DESTINATIONS",
+                        text = "AVAILABLE CLIENT CONTACTS",
                         style = MaterialTheme.typography.labelSmall.copy(
-                            color = SilverFrost,
-                            letterSpacing = 1.sp
+                            color = KimiBurgundy,
+                            letterSpacing = 1.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     )
                 }
@@ -1749,11 +1833,11 @@ fun DispatchTab(viewModel: AetherViewModel) {
                             .fillMaxWidth()
                             .border(
                                 1.dp,
-                                MutedBlueGlow.copy(alpha = 0.2f),
-                                RoundedCornerShape(20.dp)
+                                KimiDarkPeach.copy(alpha = 0.5f),
+                                RoundedCornerShape(24.dp)
                             ),
-                        colors = CardDefaults.cardColors(containerColor = RichNavy),
-                        shape = RoundedCornerShape(20.dp)
+                        colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                        shape = RoundedCornerShape(24.dp)
                     ) {
                         Row(
                             modifier = Modifier
@@ -1766,32 +1850,32 @@ fun DispatchTab(viewModel: AetherViewModel) {
                                 Text(
                                     text = contact.name,
                                     style = MaterialTheme.typography.titleMedium.copy(
-                                        color = Color.White,
+                                        color = KimiCharcoal,
                                         fontWeight = FontWeight.Bold
                                     )
                                 )
                                 Text(
                                     text = contact.phone,
-                                    style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                                 )
                             }
 
                             Button(
                                 onClick = { viewModel.initiateSimulatedCall(contact.name, contact.phone) },
-                                colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                                shape = RoundedCornerShape(14.dp),
                                 modifier = Modifier.testTag("dial_${contact.name.replace(" ", "_")}")
                             ) {
-                                Icon(imageVector = Icons.Default.PhoneInTalk, contentDescription = "Dial", tint = Color.White)
+                                Icon(imageVector = Icons.Default.PhoneInTalk, contentDescription = "Dial", tint = KimiPeach)
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Dial AI", color = Color.White)
+                                Text("Call", color = KimiPeach)
                             }
                         }
                     }
                 }
             }
         } else {
-            // Live Call Active Screen! (HUD styling matching OpenAI Advanced Voice / Futuristic HUD)
+            // Live Call Screen styled like Screen 2 of Image 1
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -1805,21 +1889,22 @@ fun DispatchTab(viewModel: AetherViewModel) {
                         .fillMaxWidth()
                         .border(
                             1.dp,
-                            ElectricSapphire.copy(alpha = 0.5f),
-                            RoundedCornerShape(24.dp)
+                            KimiDarkPeach,
+                            RoundedCornerShape(28.dp)
                         ),
-                    colors = CardDefaults.cardColors(containerColor = RichNavy),
-                    shape = RoundedCornerShape(24.dp)
+                    colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                    shape = RoundedCornerShape(28.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "SOVEREIGN CALL LINK STATUS",
+                            text = "CALL STATUS",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = SilverFrost,
-                                letterSpacing = 2.sp
+                                color = KimiWarmGray,
+                                letterSpacing = 2.sp,
+                                fontWeight = FontWeight.Bold
                             )
                         )
 
@@ -1828,7 +1913,7 @@ fun DispatchTab(viewModel: AetherViewModel) {
                         Text(
                             text = activeName,
                             style = MaterialTheme.typography.titleLarge.copy(
-                                color = Color.White,
+                                color = KimiCharcoal,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 24.sp
                             )
@@ -1836,24 +1921,24 @@ fun DispatchTab(viewModel: AetherViewModel) {
 
                         Text(
                             text = activePhone,
-                            style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                         )
 
                         Spacer(modifier = Modifier.height(28.dp))
 
-                        // Pulsing glowing orb when active
+                        // Soft breathing radial backplate for voice representation
                         Box(
                             modifier = Modifier
-                                .size(160.dp)
+                                .size(150.dp)
                                 .drawBehind {
-                                    val finalPulse = if (isSpeaking) pulseSize.dp.toPx() else 110.dp.toPx()
+                                    val finalPulse = if (isSpeaking) pulseSize.dp.toPx() else 100.dp.toPx()
                                     drawCircle(
-                                        color = ElectricSapphire.copy(alpha = 0.2f),
+                                        color = KimiPeach,
                                         radius = finalPulse
                                     )
                                     drawCircle(
-                                        color = ElectricSapphire.copy(alpha = 0.5f),
-                                        radius = 80.dp.toPx()
+                                        color = KimiDarkPeach,
+                                        radius = 70.dp.toPx()
                                     )
                                 },
                             contentAlignment = Alignment.Center
@@ -1861,43 +1946,43 @@ fun DispatchTab(viewModel: AetherViewModel) {
                             Icon(
                                 imageVector = if (isSpeaking) Icons.Default.VolumeUp else Icons.Default.Mic,
                                 contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(48.dp)
+                                tint = KimiBurgundy,
+                                modifier = Modifier.size(44.dp)
                             )
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Text(
-                            text = if (callState == CallState.CONNECTING) "HANDSHAKING DUPLEX STREAM..." else "SECURE PSTN CHANNEL OPEN // DIALOGUE COMMENCED",
+                            text = if (callState == CallState.CONNECTING) "CONNECTING CALL CHANNELS..." else "CALL IN PROGRESS",
                             style = MaterialTheme.typography.labelSmall.copy(
-                                color = if (callState == CallState.CONNECTING) SilverFrost else ElectricSapphire,
+                                color = KimiBurgundy,
                                 fontWeight = FontWeight.Bold
                             )
                         )
                     }
                 }
 
-                // Scrolling Live transcript characters HUD
+                // Call transcript log scrolling box styled with custom bubbles
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(240.dp)
-                        .border(1.dp, MutedBlueGlow.copy(alpha = 0.15f), RoundedCornerShape(16.dp)),
-                    colors = CardDefaults.cardColors(containerColor = DarkGreyNavy),
-                    shape = RoundedCornerShape(16.dp)
+                        .height(250.dp)
+                        .border(1.dp, KimiDarkPeach.copy(alpha = 0.5f), RoundedCornerShape(24.dp)),
+                    colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                    shape = RoundedCornerShape(24.dp)
                 ) {
                     Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             Text(
-                                text = "TRUNK REAL-TIME TRANSCRIPT // SECURE DISPATCH LOG",
-                                style = MaterialTheme.typography.labelSmall.copy(color = MutedBlueGlow, letterSpacing = 0.5.sp)
+                                text = "REAL-TIME TRANSCRIPT LOG",
+                                style = MaterialTheme.typography.labelSmall.copy(color = KimiBurgundy, fontWeight = FontWeight.Bold)
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                text = if (transcript.isEmpty()) "Awaiting carrier stream connection..." else transcript,
+                                text = if (transcript.isEmpty()) "Connecting to client line..." else transcript,
                                 style = MaterialTheme.typography.bodyMedium.copy(
-                                    color = SoftIceWhite,
+                                    color = KimiCharcoal,
                                     lineHeight = 22.sp
                                 )
                             )
@@ -1905,25 +1990,26 @@ fun DispatchTab(viewModel: AetherViewModel) {
                     }
                 }
 
-                // Hang Up trigger
+                // Hang Up Button (Burgundy round button)
                 Button(
                     onClick = { viewModel.hangUpCall() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.8f)),
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
                     shape = CircleShape,
                     modifier = Modifier
-                        .size(64.dp)
-                        .testTag("hangup_button")
+                        .size(68.dp)
+                        .testTag("hangup_button"),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
-                    Icon(imageVector = Icons.Rounded.Close, contentDescription = "Hang Up", tint = Color.White, modifier = Modifier.size(28.dp))
+                    Icon(imageVector = Icons.Rounded.Close, contentDescription = "Hang Up", tint = KimiPeach, modifier = Modifier.size(32.dp))
                 }
             }
         }
     }
 }
 
-// ---------------- AUTOMATION & INTEGRATION TAB ----------------
+// ---------------- AUTOMATION TAB ----------------
 @Composable
-fun AutomationTab(viewModel: AetherViewModel) {
+fun KimiAutomationTab(viewModel: KimiViewModel) {
     val rules by viewModel.automationRules.collectAsState(initial = emptyList())
     val hsActive by viewModel.hubspotActive.collectAsState()
     val sfActive by viewModel.salesforceActive.collectAsState()
@@ -1948,27 +2034,27 @@ fun AutomationTab(viewModel: AetherViewModel) {
             ) {
                 Column {
                     Text(
-                        text = "Core Automation Rules",
+                        text = "Automation Rules",
                         style = MaterialTheme.typography.displayMedium.copy(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color.White
+                            color = KimiBurgundy
                         )
                     )
                     Text(
-                        text = "Orchestrate automated triggers without human latency.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                        text = "Deploy automatic triggers to synchronize call events.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                     )
                 }
 
                 Button(
                     onClick = { showRuleModal = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                    shape = RoundedCornerShape(14.dp)
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = Color.White)
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null, tint = KimiPeach)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Add Rule", color = Color.White)
+                    Text("Add", color = KimiPeach)
                 }
             }
         }
@@ -1980,11 +2066,11 @@ fun AutomationTab(viewModel: AetherViewModel) {
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        MutedBlueGlow.copy(alpha = 0.15f),
-                        RoundedCornerShape(16.dp)
+                        KimiDarkPeach.copy(alpha = 0.5f),
+                        RoundedCornerShape(20.dp)
                     ),
-                colors = CardDefaults.cardColors(containerColor = RichNavy),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Row(
                     modifier = Modifier.padding(16.dp),
@@ -1994,74 +2080,72 @@ fun AutomationTab(viewModel: AetherViewModel) {
                     Box(
                         modifier = Modifier
                             .size(36.dp)
-                            .background(ElectricSapphire.copy(alpha = 0.15f), CircleShape),
+                            .background(KimiPeach, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(imageVector = Icons.Default.Bolt, contentDescription = null, tint = ElectricSapphire)
+                        Icon(imageVector = Icons.Default.Bolt, contentDescription = null, tint = KimiBurgundy)
                     }
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = "TRIGGER: ${rule.triggerEvent}",
-                            style = MaterialTheme.typography.labelSmall.copy(color = MutedBlueGlow, fontWeight = FontWeight.Bold)
+                            style = MaterialTheme.typography.labelSmall.copy(color = KimiBurgundy, fontWeight = FontWeight.Bold)
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "ACTION: ${rule.actionToTake}",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.White, fontWeight = FontWeight.SemiBold)
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiCharcoal, fontWeight = FontWeight.SemiBold)
                         )
                     }
 
                     Switch(
                         checked = rule.isEnabled,
-                        onCheckedChange = { /* Simulated toggle on persist */ },
+                        onCheckedChange = { /* Persistent Switch callback placeholder */ },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = ElectricSapphire,
-                            checkedTrackColor = ElectricSapphire.copy(alpha = 0.4f),
-                            uncheckedThumbColor = SilverFrost,
-                            uncheckedTrackColor = DarkGreyNavy
+                            checkedThumbColor = KimiPeach,
+                            checkedTrackColor = KimiBurgundy,
+                            uncheckedThumbColor = KimiWarmGray,
+                            uncheckedTrackColor = KimiCream
                         )
                     )
                 }
             }
         }
 
-        // CRM Integration Showcase
+        // CRM Integration
         item {
             Text(
-                text = "ENTERPRISE SYNC INTEGRATIONS",
+                text = "CRM INTEGRATIONS",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = SilverFrost,
-                    letterSpacing = 1.sp
+                    color = KimiBurgundy,
+                    letterSpacing = 1.sp,
+                    fontWeight = FontWeight.Bold
                 )
             )
         }
 
-        // HubSpot Sync
         item {
-            IntegrationCard(
-                title = "HubSpot Core CRM Sync",
-                description = "Automatically map qualified Aether leads directly to pipeline deals.",
+            KimiIntegrationCard(
+                title = "HubSpot CRM Sync",
+                description = "Automatically map call results to pipeline contacts.",
                 isActive = hsActive,
                 onToggle = { viewModel.toggleHubspot() }
             )
         }
 
-        // Salesforce Sync
         item {
-            IntegrationCard(
-                title = "Salesforce Enterprise Cloud",
-                description = "Pipe full-dialogue SIP voice tape transcripts directly into contact opportunities.",
+            KimiIntegrationCard(
+                title = "Salesforce Integration",
+                description = "Sync call details directly into client opportunities.",
                 isActive = sfActive,
                 onToggle = { viewModel.toggleSalesforce() }
             )
         }
 
-        // Zapier Trigger webhook
         item {
-            IntegrationCard(
-                title = "Zapier Automation Engine",
-                description = "Transmit active call logs to 5,000+ client hooks immediately.",
+            KimiIntegrationCard(
+                title = "Zapier Connect Engine",
+                description = "Trigger workflows and notifications immediately.",
                 isActive = zpActive,
                 onToggle = { viewModel.toggleZapier() }
             )
@@ -2071,20 +2155,32 @@ fun AutomationTab(viewModel: AetherViewModel) {
     if (showRuleModal) {
         AlertDialog(
             onDismissRequest = { showRuleModal = false },
-            title = { Text("Assemble New Automation Trigger", color = Color.White) },
+            title = { Text("Create Automation Rule", color = KimiBurgundy, fontWeight = FontWeight.Bold) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     OutlinedTextField(
                         value = trigText,
                         onValueChange = { trigText = it },
-                        label = { Text("Triggering Event (e.g. On High-Intent Lead)") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        label = { Text("Triggering Event (e.g. On Lead)") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                     OutlinedTextField(
                         value = actText,
                         onValueChange = { actText = it },
-                        label = { Text("Action Sequence to Dispatch") },
-                        colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.White, unfocusedTextColor = Color.White)
+                        label = { Text("Action to Perform") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = KimiBurgundy,
+                            unfocusedBorderColor = KimiDarkPeach,
+                            focusedTextColor = KimiCharcoal,
+                            unfocusedTextColor = KimiCharcoal
+                        ),
+                        shape = RoundedCornerShape(12.dp)
                     )
                 }
             },
@@ -2098,24 +2194,24 @@ fun AutomationTab(viewModel: AetherViewModel) {
                             showRuleModal = false
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = ElectricSapphire)
+                    colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy)
                 ) {
-                    Text("Provision Rule", color = Color.White)
+                    Text("Provision Rule", color = KimiPeach)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showRuleModal = false }) {
-                    Text("Cancel", color = SilverFrost)
+                    Text("Cancel", color = KimiBurgundy)
                 }
             },
-            containerColor = RichNavy,
-            shape = RoundedCornerShape(20.dp)
+            containerColor = KimiWhite,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 }
 
 @Composable
-fun IntegrationCard(
+fun KimiIntegrationCard(
     title: String,
     description: String,
     isActive: Boolean,
@@ -2126,11 +2222,11 @@ fun IntegrationCard(
             .fillMaxWidth()
             .border(
                 1.dp,
-                if (isActive) ElectricSapphire.copy(alpha = 0.5f) else MutedBlueGlow.copy(alpha = 0.15f),
-                RoundedCornerShape(16.dp)
+                if (isActive) KimiBurgundy else KimiDarkPeach.copy(alpha = 0.4f),
+                RoundedCornerShape(20.dp)
             ),
-        colors = CardDefaults.cardColors(containerColor = DarkGreyNavy),
-        shape = RoundedCornerShape(16.dp)
+        colors = CardDefaults.cardColors(containerColor = KimiWhite),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -2140,32 +2236,43 @@ fun IntegrationCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyLarge.copy(color = Color.White, fontWeight = FontWeight.Bold)
+                    style = MaterialTheme.typography.bodyLarge.copy(color = KimiCharcoal, fontWeight = FontWeight.Bold)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = description,
-                    style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp)
                 )
             }
 
             Switch(
                 checked = isActive,
-                onCheckedChange = { onToggle() },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = ElectricSapphire,
-                    checkedTrackColor = ElectricSapphire.copy(alpha = 0.4f),
-                    uncheckedThumbColor = SilverFrost,
-                    uncheckedTrackColor = MidnightBlue
-                )
+                onToggle = onToggle
             )
         }
     }
 }
 
-// ---------------- ROOT privilegES, DIAGNOSTICS & ACCOUNT TAB ----------------
 @Composable
-fun AccountTab(viewModel: AetherViewModel) {
+fun Switch(
+    checked: Boolean,
+    onToggle: () -> Unit
+) {
+    Switch(
+        checked = checked,
+        onCheckedChange = { onToggle() },
+        colors = SwitchDefaults.colors(
+            checkedThumbColor = KimiPeach,
+            checkedTrackColor = KimiBurgundy,
+            uncheckedThumbColor = KimiWarmGray,
+            uncheckedTrackColor = KimiCream
+        )
+    )
+}
+
+// ---------------- SETTINGS & SYSTEM DETAILS TAB ----------------
+@Composable
+fun KimiAccountTab(viewModel: KimiViewModel) {
     val isRooted by viewModel.isDeviceRooted.collectAsState()
     val lowLevelInject by viewModel.lowLevelAudioInjection.collectAsState()
     val rawBusTap by viewModel.telephonyBusTap.collectAsState()
@@ -2182,16 +2289,16 @@ fun AccountTab(viewModel: AetherViewModel) {
         item {
             Column {
                 Text(
-                    text = "Aether Systems & Diagnostics",
+                    text = "Kimi Systems & Diagnostics",
                     style = MaterialTheme.typography.displayMedium.copy(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.White
+                        color = KimiBurgundy
                     )
                 )
                 Text(
-                    text = "Low-level system controls and sovereign license details.",
-                    style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost)
+                    text = "System parameters, custom audio routing, and direct console logs.",
+                    style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray)
                 )
             }
         }
@@ -2202,63 +2309,76 @@ fun AccountTab(viewModel: AetherViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(
-                        2.dp,
-                        ElectricSapphire.copy(alpha = 0.5f),
-                        RoundedCornerShape(20.dp)
+                        1.dp,
+                        KimiDarkPeach,
+                        RoundedCornerShape(24.dp)
                     ),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = RichNavy)
+                shape = RoundedCornerShape(24.dp),
+                colors = CardDefaults.cardColors(containerColor = KimiWhite)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(
-                        text = "COMMISSIONED LICENSE SUBSCRIPTION STATUS",
-                        style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost, letterSpacing = 1.sp)
+                        text = "LICENSE SUBSCRIPTION STATUS",
+                        style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray, letterSpacing = 1.sp, fontWeight = FontWeight.Bold)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = currentBillingTier,
-                        style = MaterialTheme.typography.titleMedium.copy(color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        style = MaterialTheme.typography.titleMedium.copy(color = KimiBurgundy, fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Continuous sovereign PSTN channel dialing, high-fidelity vocoder outputs enabled.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                        text = "Allows continuous dialing, call history archiving, and custom caller assistants.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         Button(
-                            onClick = { viewModel.setSaasTier("Sapphire Sovereign Enterprise") },
+                            onClick = { viewModel.setSaasTier("Kimi Pro Enterprise") },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (currentBillingTier.contains("Sovereign")) ElectricSapphire else DarkGreyNavy
+                                containerColor = if (currentBillingTier.contains("Enterprise")) KimiBurgundy else KimiCream
                             ),
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            border = BorderStroke(1.dp, KimiDarkPeach)
                         ) {
-                            Text("Sovereign Tier", color = Color.White, fontSize = 11.sp)
+                            Text(
+                                text = "Enterprise Tier",
+                                color = if (currentBillingTier.contains("Enterprise")) KimiPeach else KimiCharcoal,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
 
                         Button(
-                            onClick = { viewModel.setSaasTier("Standard Pro License") },
+                            onClick = { viewModel.setSaasTier("Kimi Standard Pro") },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (currentBillingTier.contains("Standard")) ElectricSapphire else DarkGreyNavy
+                                containerColor = if (currentBillingTier.contains("Standard")) KimiBurgundy else KimiCream
                             ),
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(10.dp),
+                            border = BorderStroke(1.dp, KimiDarkPeach)
                         ) {
-                            Text("Standard Pro", color = Color.White, fontSize = 11.sp)
+                            Text(
+                                text = "Standard Pro",
+                                color = if (currentBillingTier.contains("Standard")) KimiPeach else KimiCharcoal,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                     }
                 }
             }
         }
 
-        // Root status details (Administrative capability diagnostics)
+        // Toggles for Direct Audio Links
         item {
             Text(
-                text = "LOW-LEVEL OPERATIVE CHASSIS (ROOT FEATURES)",
+                text = "DIRECT AUDIO SETTINGS",
                 style = MaterialTheme.typography.labelSmall.copy(
-                    color = SilverFrost,
-                    letterSpacing = 1.sp
+                    color = KimiBurgundy,
+                    letterSpacing = 1.sp,
+                    fontWeight = FontWeight.Bold
                 )
             )
         }
@@ -2269,11 +2389,11 @@ fun AccountTab(viewModel: AetherViewModel) {
                     .fillMaxWidth()
                     .border(
                         1.dp,
-                        if (isRooted) ElectricSapphire.copy(alpha = 0.5f) else MutedBlueGlow.copy(alpha = 0.15f),
-                        RoundedCornerShape(16.dp)
+                        KimiDarkPeach.copy(alpha = 0.5f),
+                        RoundedCornerShape(20.dp)
                     ),
-                colors = CardDefaults.cardColors(containerColor = RichNavy),
-                shape = RoundedCornerShape(16.dp)
+                colors = CardDefaults.cardColors(containerColor = KimiWhite),
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -2282,21 +2402,19 @@ fun AccountTab(viewModel: AetherViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Root Privilege State",
-                            style = MaterialTheme.typography.bodyLarge.copy(color = Color.White, fontWeight = FontWeight.Bold)
+                            text = "Direct Audio Link Mode",
+                            style = MaterialTheme.typography.bodyLarge.copy(color = KimiCharcoal, fontWeight = FontWeight.Bold)
                         )
                         Box(
                             modifier = Modifier
-                                .background(
-                                    if (isRooted) ElectricSapphire.copy(alpha = 0.2f) else DarkGreyNavy,
-                                    RoundedCornerShape(8.dp)
-                                )
+                                .background(KimiPeach, RoundedCornerShape(8.dp))
+                                .border(1.dp, KimiDarkPeach, RoundedCornerShape(8.dp))
                                 .padding(horizontal = 8.dp, vertical = 2.dp)
                         ) {
                             Text(
-                                text = if (isRooted) "ROOTED" else "UNROOTED / USERLAND",
+                                text = if (isRooted) "AVAILABLE" else "STANDARD LAYER",
                                 style = MaterialTheme.typography.labelSmall.copy(
-                                    color = if (isRooted) ElectricSapphire else SilverFrost,
+                                    color = KimiBurgundy,
                                     fontWeight = FontWeight.Bold
                                 )
                             )
@@ -2304,15 +2422,15 @@ fun AccountTab(viewModel: AetherViewModel) {
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = if (isRooted) "Direct kernel SIP taps and audio stream overrides are authorized." else "Root access was not found. System uses pure userland Android API routing layers natively.",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp)
+                        text = if (isRooted) "Direct dialer audio channels and voice synthesis modules are active." else "Standard system audio is in use. Running standard voice channels.",
+                        style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Low-Level Mixer Direct Injection",
-                        style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                        text = "Hardware Mixer Direct Injection",
+                        style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
@@ -2321,27 +2439,21 @@ fun AccountTab(viewModel: AetherViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Intercept voice channels in hardware mixer directly.",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp),
+                            text = "Inject audio signals directly to hardware mixer channel.",
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp),
                             modifier = Modifier.weight(1f)
                         )
                         Switch(
                             checked = lowLevelInject,
-                            onCheckedChange = { viewModel.toggleLowLevelAudio() },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = ElectricSapphire,
-                                checkedTrackColor = ElectricSapphire.copy(alpha = 0.4f),
-                                uncheckedThumbColor = SilverFrost,
-                                uncheckedTrackColor = MidnightBlue
-                            )
+                            onToggle = { viewModel.toggleLowLevelAudio() }
                         )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Telephony Baseband capture wire",
-                        style = MaterialTheme.typography.labelSmall.copy(color = SilverFrost)
+                        text = "Baseband Phone Call Tape",
+                        style = MaterialTheme.typography.labelSmall.copy(color = KimiWarmGray)
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(
@@ -2350,48 +2462,42 @@ fun AccountTab(viewModel: AetherViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Simulate PSTN baseband bypass directly in cellular bus.",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = SilverFrost, fontSize = 12.sp),
+                            text = "Link simulated call tape directly into cellular bus.",
+                            style = MaterialTheme.typography.bodyMedium.copy(color = KimiWarmGray, fontSize = 12.sp),
                             modifier = Modifier.weight(1f)
                         )
                         Switch(
                             checked = rawBusTap,
-                            onCheckedChange = { viewModel.toggleTelephonyBusTap() },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = ElectricSapphire,
-                                checkedTrackColor = ElectricSapphire.copy(alpha = 0.4f),
-                                uncheckedThumbColor = SilverFrost,
-                                uncheckedTrackColor = MidnightBlue
-                            )
+                            onToggle = { viewModel.toggleTelephonyBusTap() }
                         )
                     }
                 }
             }
         }
 
-        // Root terminal live diagnostics logger
+        // Kimi Console (Premium burgundy console with peach text)
         item {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .border(1.dp, MutedBlueGlow.copy(alpha = 0.15f), RoundedCornerShape(12.dp)),
-                colors = CardDefaults.cardColors(containerColor = DarkGreyNavy),
-                shape = RoundedCornerShape(12.dp)
+                    .border(1.dp, KimiDarkPeach, RoundedCornerShape(20.dp)),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF2E0417)),
+                shape = RoundedCornerShape(20.dp)
             ) {
-                Column(modifier = Modifier.padding(12.dp)) {
+                Column(modifier = Modifier.padding(14.dp)) {
                     Text(
-                        text = "AETHER PRIVILEGED CLIENT TERMINAL",
-                        style = MaterialTheme.typography.labelSmall.copy(color = MutedBlueGlow)
+                        text = "KIMI CONSOLE DIAGNOSTICS",
+                        style = MaterialTheme.typography.labelSmall.copy(color = KimiPeach, fontWeight = FontWeight.Bold)
                     )
-                    Divider(color = MutedBlueGlow.copy(alpha = 0.15f), modifier = Modifier.padding(vertical = 8.dp))
+                    Divider(color = KimiPeach.copy(alpha = 0.2f), modifier = Modifier.padding(vertical = 8.dp))
                     Box(modifier = Modifier.fillMaxSize()) {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             terminalLines.forEach { logLine ->
                                 Text(
                                     text = logLine,
                                     style = MaterialTheme.typography.bodyMedium.copy(
-                                        color = SoftIceWhite,
+                                        color = KimiPeach,
                                         fontSize = 11.sp,
                                         fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
                                     )
@@ -2403,15 +2509,15 @@ fun AccountTab(viewModel: AetherViewModel) {
             }
         }
 
-        // Administrative tool triggers
+        // Clear logs button
         item {
             Button(
                 onClick = { viewModel.clearAllLogs() },
-                colors = ButtonDefaults.buttonColors(containerColor = DarkGreyNavy),
-                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = KimiBurgundy),
+                shape = RoundedCornerShape(14.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Truncate Outbound History DB Logs", color = Color.White)
+                Text("Truncate Outbound History Logs", color = KimiPeach)
             }
         }
     }

@@ -26,7 +26,7 @@ data class Contact(
 data class AIAgent(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val voiceType: String, // "Aether Male (Pro)", "Nova Female (Satin)", "Echo Warm (Natural)"
+    val voiceType: String, // "Kimi Male (Natural)", "Kimi Female (Warm)", "Kimi Outbound (Standard)"
     val pitch: Float = 1.0f,
     val speed: Float = 1.0f,
     val systemPrompt: String,

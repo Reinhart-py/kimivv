@@ -24,9 +24,9 @@ enum class CallState {
     IDLE, CONNECTING, ACTIVE, HUNG_UP
 }
 
-class AetherViewModel(application: Application) : AndroidViewModel(application) {
+class KimiViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = AetherRepository(application)
+    private val repository = KimiRepository(application)
 
     // Navigation and Tab States
     private val _navigationState = MutableStateFlow(AppNavigationState.SPLASH)
@@ -42,7 +42,7 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
     val callHistory = repository.callHistory
     val automationRules = repository.automationRules
 
-    // Root Capabilities (Luxury Security Diagnostics)
+    // System Diagnostics
     private val _isDeviceRooted = MutableStateFlow(false)
     val isDeviceRooted: StateFlow<Boolean> = _isDeviceRooted.asStateFlow()
 
@@ -52,10 +52,10 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
     private val _telephonyBusTap = MutableStateFlow(false)
     val telephonyBusTap: StateFlow<Boolean> = _telephonyBusTap.asStateFlow()
 
-    private val _terminalLogs = MutableStateFlow<List<String>>(listOf("Aether Kernel initialized.", "Diag: Checking superuser permissions..."))
+    private val _terminalLogs = MutableStateFlow<List<String>>(listOf("Kimi App Engine initialized.", "Diag: Checking diagnostics status..."))
     val terminalLogs: StateFlow<List<String>> = _terminalLogs.asStateFlow()
 
-    // Active Simulated Live Call State Flow (High-fidelity interactive visualizer)
+    // Active Simulated Live Call State Flow
     private val _liveCallState = MutableStateFlow(CallState.IDLE)
     val liveCallState: StateFlow<CallState> = _liveCallState.asStateFlow()
 
@@ -86,12 +86,12 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
     val zapierActive: StateFlow<Boolean> = _zapierActive.asStateFlow()
 
     // Billing subscription Info
-    private val _saasTier = MutableStateFlow("Sapphire Sovereign Enterprise")
+    private val _saasTier = MutableStateFlow("Kimi Pro Enterprise")
     val saasTier: StateFlow<String> = _saasTier.asStateFlow()
 
     init {
         checkRootPresence()
-        // Auto-initialize selected audio/agent once loaded
+        // Auto-initialize selected agent once loaded
         viewModelScope.launch {
             repository.aiAgents.collect { list ->
                 if (list.isNotEmpty() && _selectedAgent.value == null) {
@@ -122,13 +122,13 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
                 }
             }
             _isDeviceRooted.value = rooted
-            appendTerminal(if (rooted) "System status: [ROOT_PRIVILEGES_GRANTED]. Direct bus capture enabled." else "System status: [NON_ROOT_SANDBOX]. Running on pure userland high-performance SIP virtualizer.")
+            appendTerminal(if (rooted) "System status: [ROOT_PRIVILEGES_GRANTED]. Direct audio capture available." else "System status: [STANDARD_MODE]. Running standard voice channels.")
         }
     }
 
     fun appendTerminal(msg: String) {
         val currentLogs = _terminalLogs.value.toMutableList()
-        currentLogs.add("Aether@Client:~$ $msg")
+        currentLogs.add("Kimi@Client:~$ $msg")
         if (currentLogs.size > 20) currentLogs.removeAt(0)
         _terminalLogs.value = currentLogs
     }
@@ -152,16 +152,16 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
             _lowLevelAudioInjection.value = !_lowLevelAudioInjection.value
             appendTerminal("AUDIO_INJECT: State set to ${_lowLevelAudioInjection.value}")
         } else {
-            appendTerminal("ERR: Require root access privilege to latch directly into system mixer.")
+            appendTerminal("ERR: Require root access to change low-level mixer settings.")
         }
     }
 
     fun toggleTelephonyBusTap() {
         if (_isDeviceRooted.value) {
             _telephonyBusTap.value = !_telephonyBusTap.value
-            appendTerminal("BUS_TAP: Kernel capture interface set to ${_telephonyBusTap.value}")
+            appendTerminal("BUS_TAP: Call capture interface set to ${_telephonyBusTap.value}")
         } else {
-            appendTerminal("ERR: Kernel bypass access is only granted on Root-enabled custom operating systems.")
+            appendTerminal("ERR: Direct bus access is disabled in standard sandbox.")
         }
     }
 
@@ -217,32 +217,32 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
             _liveCallPhone.value = phone
             _liveCallTranscript.value = ""
 
-            // Elegant loading delays mimicking SIP / PSTN Trunk registrations
+            // Delay for mock dial out
             delay(1800)
             _liveCallState.value = CallState.ACTIVE
 
             val lines = listOf(
-                "System Agent" to "Connecting downstream call to secure recipient $name on PSTN Trunk...",
+                "Kimi Agent" to "Connecting call to $name...",
                 name to "Hello? Who is this?",
-                "System Agent" to "Good evening, $name. I am calling from the Aether Intelligent Asset trust on behalf of the management concierge. I hope your evening is proceeding seamlessly.",
-                name to "Oh, yes! I was expecting details on the custom integration options. Is this the autonomous platform?",
-                "System Agent" to "Indeed. I am Aether's dedicated communications representative node. I can automatically register and build your bespoke voice nodes. Should we lock in tomorrow at 10 AM to sync your database metrics?",
-                name to "Absolutely. 10 AM works wonders. Send over the confirmation card.",
-                "System Agent" to "Marvelous. I have securely generated your slot credentials. Welcome to the elite communications standard."
+                "Kimi Agent" to "Good evening, $name. I am calling from Kimi Calling Systems. I hope you are having a wonderful day.",
+                name to "Oh, yes! I was expecting details on our scheduling options. Is this the calling service?",
+                "Kimi Agent" to "Yes, I am Kimi's dedicated call assistant. I can confirm your booking details. Shall we schedule a call tomorrow at 10 AM to discuss?",
+                name to "Absolutely. 10 AM works great for me. Send over the confirmation.",
+                "Kimi Agent" to "Perfect. I have updated your status and sent the confirmation. Have a great day!"
             )
 
             for ((speaker, text) in lines) {
                 if (_liveCallState.value != CallState.ACTIVE) break
-                val speakerLabel = if (speaker == "System Agent") "AI Agent" else speaker
+                val speakerLabel = if (speaker == "Kimi Agent") "Kimi Agent" else speaker
                 _liveCallTranscript.value += "\n\n[$speakerLabel]: "
 
-                _isAgentSpeaking.value = (speaker == "System Agent")
+                _isAgentSpeaking.value = (speaker == "Kimi Agent")
 
                 // Print text smoothly, character by character
                 for (char in text) {
                     if (_liveCallState.value != CallState.ACTIVE) break
                     _liveCallTranscript.value += char
-                    delay(if (speaker == "System Agent") 30 else 55)
+                    delay(if (speaker == "Kimi Agent") 30 else 55)
                 }
                 delay(1200)
             }
@@ -250,7 +250,7 @@ class AetherViewModel(application: Application) : AndroidViewModel(application) 
             _isAgentSpeaking.value = false
             if (_liveCallState.value == CallState.ACTIVE) {
                 _liveCallState.value = CallState.HUNG_UP
-                // Save this completed transaction to local database!
+                // Save completed call to history
                 repository.addCall(
                     CallHistory(
                         contactName = name,
